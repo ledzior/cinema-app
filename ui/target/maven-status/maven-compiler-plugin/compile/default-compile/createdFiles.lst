@@ -1,0 +1,14 @@
+chomiuk\jacek\ui\vo\Money.class
+chomiuk\jacek\ui\App.class
+chomiuk\jacek\ui\menu\MenuService.class
+chomiuk\jacek\ui\menu\UserDataService.class
+chomiuk\jacek\ui\exception\AppException.class
+chomiuk\jacek\ui\exception\MoneyException.class
+chomiuk\jacek\ui\web\ErrorMessage.class
+chomiuk\jacek\ui\web\Routing.class
+chomiuk\jacek\ui\AppSpringConfig.class
+chomiuk\jacek\ui\web\FilmsRouting.class
+chomiuk\jacek\ui\exception\MenuServiceException.class
+chomiuk\jacek\ui\web\JsonTransformer.class
+chomiuk\jacek\ui\web\ErrorMessage$ErrorMessageBuilder.class
+chomiuk\jacek\ui\exception\UserDataServiceException.class
