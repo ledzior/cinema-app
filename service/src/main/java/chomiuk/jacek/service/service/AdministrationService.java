@@ -306,28 +306,28 @@ public class AdministrationService {
     }
 
     public Long updateShowTime(UpdateShowTimeDto updateShowTimeDto){
-        //TODO Validator
+        Validator.validate(new UpdateShowTimeDtoValidator(showRepository,filmRepository),updateShowTimeDto);
         var show = showRepository.findById(updateShowTimeDto.getShowId()).get();
         show.setShowTime(updateShowTimeDto.getNewShowTime());
         return showRepository.update(show).orElseThrow(() -> new AdministrationServiceException("can not update show time!")).getId();
     }
 
     public Long updateGenreName(UpdateGenreNameDto updateGenreNameDto){
-        // TODO Validator
+        Validator.validate(new UpdateGenreNameDtoValidator(genreRepository),updateGenreNameDto);
         var genre = genreRepository.findById(updateGenreNameDto.getGenreId()).get();
         genre.setName(updateGenreNameDto.getNewGenreName());
         return genreRepository.update(genre).orElseThrow(() -> new AdministrationServiceException("can not update genre name!")).getId();
     }
 
     public Long updateCityName(UpdateCityNameDto updateCityNameDto){
-        // TODO Validator
+        Validator.validate(new UpdateCityNameDtoValidator(cityRepository),updateCityNameDto);
         var city = cityRepository.findById(updateCityNameDto.getCityId()).get();
         city.setName(updateCityNameDto.getNewCityName());
         return cityRepository.update(city).orElseThrow(() -> new AdministrationServiceException("can not update city name!")).getId();
     }
 
     public Long updatePriceName(UpdatePriceNameDto updatePriceNameDto){
-        // TODO Validator
+        Validator.validate(new UpdatePriceNameDtoValidator(priceRepository),updatePriceNameDto);
         var price = priceRepository.findById(updatePriceNameDto.getPriceId()).get();
         price.setName(updatePriceNameDto.getNewPriceName());
         return priceRepository.update(price).orElseThrow(() -> new AdministrationServiceException("can not update price name!")).getId();
