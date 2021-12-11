@@ -334,7 +334,7 @@ public class AdministrationService {
     }
 
     public Long updatePriceValue(UpdatePriceValueDto updatePriceValueDto){
-        // TODO Validator
+        Validator.validate(new UpdatePriceValueDtoValidator(priceRepository),updatePriceValueDto);
         var price = priceRepository.findById(updatePriceValueDto.getPriceId()).get();
         price.setValue(updatePriceValueDto.getNewPriceValue());
         return priceRepository.update(price).orElseThrow(() -> new AdministrationServiceException("can not update price value!")).getId();

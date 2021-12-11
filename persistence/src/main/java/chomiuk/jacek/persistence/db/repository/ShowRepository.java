@@ -21,4 +21,5 @@ public interface ShowRepository extends CrudRepository<Show,Long> {
     List<Show> findAllByRoom(String room);
     List<Show> findAllByPeriod(LocalDate dateFrom, LocalDate dateTo);
     List<Show> findAllByMovie(String movie);
+    List<Show> findAllByFilmId(Long filmId);
 }

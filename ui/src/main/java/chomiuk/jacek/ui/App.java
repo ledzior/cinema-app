@@ -33,8 +33,8 @@ public class App {
 
         menuService.authorizationMenu();
 
-        //port(8080);
-        //var filmsRouting = context.getBean("filmsRouting", FilmsRouting.class);
-        //filmsRouting.initRoutes();
+        // port(8080);
+        // var filmsRouting = context.getBean("filmsRouting", FilmsRouting.class);
+        // filmsRouting.initRoutes();
     }
 }

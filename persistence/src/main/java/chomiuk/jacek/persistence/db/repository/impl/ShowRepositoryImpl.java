@@ -224,4 +224,17 @@ public class ShowRepositoryImpl extends AbstractCrudRepository<Show,Long> implem
                 .mapToBean(Show.class)
                 .list());
     }
+
+    @Override
+    public List<Show> findAllByFilmId(Long filmId) {
+        var sql = "select s.* from shows s " +
+                "where s.film_id = :filmId";
+
+
+        return jdbi.withHandle(handle -> handle
+                .createQuery(sql)
+                .bind("filmId",filmId)
+                .mapToBean(Show.class)
+                .list());
+    }
 }
