@@ -345,7 +345,7 @@ public class AdministrationService {
 
     public Long deleteFilm(DeleteFilmDto deleteFilmDto){
         //TODO walidacja czy jest jakis show?
-        Validator.validate(new DeleteFilmDtoValidator(filmRepository), deleteFilmDto);
+        Validator.validate(new DeleteFilmDtoValidator(filmRepository,showRepository), deleteFilmDto);
 
         return filmRepository.deleteById(deleteFilmDto.getId()).orElseThrow(() -> new AdministrationServiceException("can not delete film!")).getId();
     }
