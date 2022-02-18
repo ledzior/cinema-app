@@ -10,18 +10,22 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public class UserRepositoryImpl extends AbstractCrudRepository<User,Long> implements UserRepository {
-    public UserRepositoryImpl(Jdbi jdbi){super(jdbi);}
+public class UserRepositoryImpl extends AbstractCrudRepository<User, Long> implements UserRepository {
+    public UserRepositoryImpl(Jdbi jdbi) {
+        super(jdbi);
+    }
 
     @Override
-    public User findByName(String username) {
+    public Optional<User> findByUsername(String username) {
         var sql = "select * from users where username = :username";
-        return jdbi.withHandle(handle -> handle
-                .createQuery(sql)
-                .bind("username",username)
-                .mapToBean(User.class)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("There is no such user in db!"))
+        return Optional.of(
+                jdbi.withHandle(handle -> handle
+                        .createQuery(sql)
+                        .bind("username", username)
+                        .mapToBean(User.class)
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalArgumentException("There is no such user in db!"))
+                )
         );
     }
 }

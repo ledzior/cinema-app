@@ -1,4 +1,4 @@
-package chomiuk.jacek.service.dto;
+package chomiuk.jacek.service.dto.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,13 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class RegisterUserDto {
+public class CreateUserDto {
     private String name;
     private String username;
     private String password;
-    private String confirmPassword;
+    private String passwordConfirmation;
     private String email;
 }

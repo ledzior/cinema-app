@@ -1,6 +1,6 @@
 package chomiuk.jacek.service.validation;
 
-import chomiuk.jacek.service.dto.LoginUserDto;
+import chomiuk.jacek.service.dto.security.LoginUserDto;
 import chomiuk.jacek.service.validation.generic.Validator;
 
 import java.util.HashMap;

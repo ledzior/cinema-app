@@ -15,7 +15,8 @@ import static spark.Spark.*;
 public class FilmsRouting {
     private final FilmService filmService;
     private final AdministrationService administrationService;
-    private JsonTransformer jsonTransformer;
+    private final JsonTransformer jsonTransformer;
+    private final Gson gson;
 
     // kiedy chcesz wyciagnac wszystkie filmy to dajesz url:
     // http://localhost:8080/movies
@@ -94,7 +95,8 @@ public class FilmsRouting {
         path("/genres", () -> {
             get("", (request, response) -> {
                 response.header("Content-Type", "application/json;charset=utf-8");
-                return administrationService.findAllGenres();
+                var res =  administrationService.findAllGenres();
+                return res;
             }, jsonTransformer);
         });
 

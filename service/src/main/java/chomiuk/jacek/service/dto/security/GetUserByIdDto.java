@@ -1,4 +1,4 @@
-package chomiuk.jacek.service.dto;
+package chomiuk.jacek.service.dto.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LoginUserDto {
-    private String username;
-    private String password;
+public class GetUserByIdDto {
+    private Long id;
 }

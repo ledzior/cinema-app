@@ -1,8 +1,6 @@
 package chomiuk.jacek.service.service;
 
-import chomiuk.jacek.persistence.db.model.Favourite;
 import chomiuk.jacek.persistence.db.model.Film;
-import chomiuk.jacek.persistence.db.model.Genre;
 import chomiuk.jacek.persistence.db.repository.FavouriteRepository;
 import chomiuk.jacek.persistence.db.repository.FilmRepository;
 import chomiuk.jacek.persistence.db.repository.GenreRepository;
@@ -10,22 +8,17 @@ import chomiuk.jacek.persistence.db.repository.UserRepository;
 import chomiuk.jacek.service.dto.CreateFavouriteDto;
 import chomiuk.jacek.service.dto.GetFilmByNameDto;
 import chomiuk.jacek.service.dto.GetFilmByPhraseDto;
-import chomiuk.jacek.service.exception.FilmServiceException;
 import chomiuk.jacek.service.dto.CreateFilmDto;
-import chomiuk.jacek.service.mapper.Mappers;
-import chomiuk.jacek.service.validation.CreateFilmDtoValidator;
 import chomiuk.jacek.service.validation.GetFilmByNameDtoValidator;
 import chomiuk.jacek.service.validation.GetFilmByPhraseDtoValidator;
 import chomiuk.jacek.service.validation.generic.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -136,7 +129,7 @@ public class FilmService {
             CreateFavouriteDto
                     .builder()
                     .filmId(films.get(0).getId())
-                    .userId(userRepository.findByName(UserDataService.getString("\nInput your username: ")).getId())
+                    .userId(userRepository.findByUsername(UserDataService.getString("\nInput your username: ")).getId())
                     .build()
         :
 
@@ -147,7 +140,7 @@ public class FilmService {
                             .get(UserDataService.getInt("\nInput number of film you want to add to your favourites: ")-1)
                             .getId())
                     //TODO jak efektywnie przekazywać user_id ?? -> tokenem
-                    .userId(userRepository.findByName(UserDataService.getString("\nInput your username: ")).getId())
+                    .userId(userRepository.findByUsername(UserDataService.getString("\nInput your username: ")).getId())
                     .build();
 
         var addedFavouriteId = administrationService.createFavourite(createFavouriteDto);

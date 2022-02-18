@@ -3,6 +3,8 @@ package chomiuk.jacek.ui.menu;
 import chomiuk.jacek.persistence.db.model.*;
 import chomiuk.jacek.persistence.db.repository.*;
 import chomiuk.jacek.service.dto.*;
+import chomiuk.jacek.service.dto.security.CreateUserDto;
+import chomiuk.jacek.service.dto.security.LoginUserDto;
 import chomiuk.jacek.service.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -450,12 +452,12 @@ public class MenuService {
             var password = UserDataService.getString("\nInput your password: ");
             var passwordConfirmation = UserDataService.getString("\nConfirm your password: ");
             var email = UserDataService.getString("\nInput your email: ");
-            var registerUserDto = RegisterUserDto
+            var registerUserDto = CreateUserDto
                     .builder()
                     .name(name)
                     .username(username)
                     .password(password)
-                    .confirmPassword(passwordConfirmation)
+                    .passwordConfirmation(passwordConfirmation)
                     .email(email)
                     .build();
             Long newUserId = authorizationService.register(registerUserDto);

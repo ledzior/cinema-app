@@ -1,44 +1,54 @@
 package chomiuk.jacek.service.service;
 
-import chomiuk.jacek.persistence.db.model.User;
 import chomiuk.jacek.persistence.db.repository.UserRepository;
-import chomiuk.jacek.service.dto.LoginUserDto;
-import chomiuk.jacek.service.dto.RegisterUserDto;
+import chomiuk.jacek.service.dto.security.CreateUserDto;
+import chomiuk.jacek.service.dto.security.LoginUserDto;
+import chomiuk.jacek.service.dto.security.TokensDto;
 import chomiuk.jacek.service.exception.AuthorizationServiceException;
-import chomiuk.jacek.service.exception.FilmServiceException;
 import chomiuk.jacek.service.mapper.Mappers;
 import chomiuk.jacek.service.validation.LoginUserDtoValidator;
-import chomiuk.jacek.service.validation.RegisterUserDtoValidator;
+import chomiuk.jacek.service.validation.CreateUserDtoValidator;
 import chomiuk.jacek.service.validation.generic.Validator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class AuthorizationService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AppTokensService tokensService;
 
-    public boolean login(LoginUserDto loginUserDto){
+    public void checkAuthenticationData(LoginUserDto loginUserDto){
         Validator.validate(new LoginUserDtoValidator(), loginUserDto);
 
-        var userInDb = userRepository.findByName(loginUserDto.getUsername());
-        return loginUserDto.getUsername().equals(userInDb.getUsername()) && loginUserDto.getPassword().equals(userInDb.getPassword());
+        var userInDb = userRepository
+                .findByUsername(loginUserDto.getUsername())
+                .orElseThrow(() -> new AuthorizationServiceException("Bad authentication info"));
+        if (!passwordEncoder.matches(loginUserDto.getPassword(), userInDb.getPassword())) {
+            throw new AuthorizationServiceException("Authentication data failed");
+        }
     }
 
-    public Long register(RegisterUserDto registerUserDto){
-        Validator.validate(new RegisterUserDtoValidator(), registerUserDto);
+    public TokensDto login(LoginUserDto loginUserDto) {
+        return tokensService.generateTokens(loginUserDto);
+    }
 
-        var user = Mappers.fromRegisterUserDtoToUser(registerUserDto);
+    public Long register(CreateUserDto createUserDto){
+        Validator.validate(new CreateUserDtoValidator(), createUserDto);
+
+        createUserDto.setPassword(passwordEncoder.encode(createUserDto.getPassword()));
+        var user = Mappers.fromRegisterUserDtoToUser(createUserDto);
         var insertedUser = userRepository.add(user);
-        return insertedUser.get().getId();
+        return insertedUser
+                .orElseThrow(() -> new AuthorizationServiceException("Cannot register user"))
+                .getId();
     }
 
     public boolean isAdmin(LoginUserDto loginUserDto){
         // TODO Validator
-        var userInDb = userRepository.findByName(loginUserDto.getUsername());
+        var userInDb = userRepository.findByUsername(loginUserDto.getUsername());
         return userInDb.getStatusId() == 1;
     }
 }

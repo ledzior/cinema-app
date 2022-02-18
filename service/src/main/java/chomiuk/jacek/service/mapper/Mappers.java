@@ -2,6 +2,8 @@ package chomiuk.jacek.service.mapper;
 
 import chomiuk.jacek.persistence.db.model.*;
 import chomiuk.jacek.service.dto.*;
+import chomiuk.jacek.service.dto.security.CreateUserDto;
+import chomiuk.jacek.service.dto.security.LoginUserDto;
 
 public interface Mappers {
 
@@ -90,13 +92,13 @@ public interface Mappers {
                 .build();
     }
 
-    static User fromRegisterUserDtoToUser(RegisterUserDto registerUserDto){
+    static User fromRegisterUserDtoToUser(CreateUserDto createUserDto){
         return User
                 .builder()
-                .name(registerUserDto.getName())
-                .username(registerUserDto.getUsername())
-                .password(registerUserDto.getPassword())
-                .email(registerUserDto.getEmail())
+                .name(createUserDto.getName())
+                .username(createUserDto.getUsername())
+                .password(createUserDto.getPassword())
+                .email(createUserDto.getEmail())
                 .statusId(2L)
                 .build();
     }

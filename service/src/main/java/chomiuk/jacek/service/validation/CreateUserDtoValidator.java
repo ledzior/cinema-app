@@ -1,15 +1,15 @@
 package chomiuk.jacek.service.validation;
 
-import chomiuk.jacek.service.dto.RegisterUserDto;
+import chomiuk.jacek.service.dto.security.CreateUserDto;
 import chomiuk.jacek.service.validation.generic.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class RegisterUserDtoValidator implements Validator<RegisterUserDto> {
+public class CreateUserDtoValidator implements Validator<CreateUserDto> {
     @Override
-    public Map<String, String> validate(RegisterUserDto registerUserDto) {
+    public Map<String, String> validate(CreateUserDto registerUserDto) {
         var errors = new HashMap<String, String>();
 
         if (!isNameValid(registerUserDto.getName())){
@@ -25,7 +25,7 @@ public class RegisterUserDtoValidator implements Validator<RegisterUserDto> {
             errors.put("password","is too long");
         }
 
-        if (!isPasswordConfirmationValid(registerUserDto.getConfirmPassword())){
+        if (!isPasswordConfirmationValid(registerUserDto.getPasswordConfirmation())){
             errors.put("password confirmation","is not correct");
         }
 

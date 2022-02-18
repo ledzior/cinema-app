@@ -1,4 +1,4 @@
-package chomiuk.jacek.service.dto;
+package chomiuk.jacek.service.dto.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

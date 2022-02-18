@@ -13,6 +13,7 @@ import chomiuk.jacek.service.service.FilmService;
 import chomiuk.jacek.service.service.TicketService;
 import chomiuk.jacek.ui.menu.MenuService;
 import chomiuk.jacek.ui.web.FilmsRouting;
+import chomiuk.jacek.ui.web.SecurityRouting;
 import org.jdbi.v3.core.Jdbi;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -25,16 +26,23 @@ public class App {
     public static void main(String[] args) {
         //Jdbi jdbi = DbConnection.getInstance().getJdbi();
         var context = new AnnotationConfigApplicationContext(AppSpringConfig.class);
-        var filmService = context.getBean("filmService", FilmService.class);
+        /*var filmService = context.getBean("filmService", FilmService.class);
         var ticketService = context.getBean("ticketService", TicketService.class);
         var administrationService = context.getBean("administrationService", AdministrationService.class);
         var authorizationService = context.getBean("authorizationService", AuthorizationService.class);
         var menuService = context.getBean("menuService", MenuService.class);
 
-        menuService.authorizationMenu();
+        menuService.authorizationMenu();*/
+        initExceptionHandler(e -> {
+            System.out.println("-----------------------------------------");
+            System.out.println(e.getMessage());
+            System.out.println("-----------------------------------------");
+        });
+        port(8090);
+        var filmsRouting = context.getBean("filmsRouting", FilmsRouting.class);
+        filmsRouting.initRoutes();
 
-        // port(8080);
-        // var filmsRouting = context.getBean("filmsRouting", FilmsRouting.class);
-        // filmsRouting.initRoutes();
+        var securityRouting = context.getBean("securityRouting", SecurityRouting.class);
+        securityRouting.initRoutes();
     }
 }
